@@ -6,12 +6,17 @@ USER root
 
 # Update package list and install Docker CLI and curl
 RUN apt-get update && \
-    apt-get install -y docker.io curl && \
+    apt-get install -y curl && \
     apt-get clean
+
+RUN curl -fsSL https://get.docker.com | sh
+
+# Create the docker group if it doesn't exist and add the jenkins user to it
+RUN groupadd -f docker && usermod -aG docker jenkins
 
 # Install Docker Compose (standalone binary)
 # Replace v2.17.2 with the version you prefer (check https://github.com/docker/compose/releases)
-RUN curl -L "https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
+RUN curl -L "https://github.com/docker/compose/releases/download/v2.29.7/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
     chmod +x /usr/local/bin/docker-compose
 
 # (Optional) Verify installation (this line is for debugging and can be removed)

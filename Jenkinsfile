@@ -16,15 +16,15 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
-                sh 'docker-compose build'
+                sh 'docker compose build'
             }
         }
         stage('Run Migrations & Tests') {
             steps {
                 echo 'Applying migrations...'
-                sh 'docker-compose run web python manage.py migrate'
+                sh 'docker compose run web python manage.py migrate'
                 // Optionally run your tests here, e.g.,
-                // sh 'docker-compose run web python manage.py test'
+                // sh 'docker compose run web python manage.py test'
             }
         }
         stage('Push Docker Image') {
@@ -40,9 +40,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
-                // Example: restart docker-compose stack (or use Kubernetes, etc.)
-                sh 'docker-compose down'
-                sh 'docker-compose up -d'
+                // Example: restart docker compose stack (or use Kubernetes, etc.)
+                sh 'docker compose down'
+                sh 'docker compose up -d'
             }
         }
     }
