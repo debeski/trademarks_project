@@ -1,0 +1,15 @@
+FROM jenkins/jenkins:lts
+
+# Switch to root to install packages
+USER root
+
+# Install Docker CLI (this example uses docker.io from apt)
+RUN apt-get update && \
+    apt-get install -y docker.io && \
+    apt-get clean
+
+# Optionally, install docker-compose if needed (if not already available)
+# RUN apt-get install -y docker-compose
+
+# Switch back to Jenkins user
+USER jenkins
