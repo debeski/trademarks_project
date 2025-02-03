@@ -16,13 +16,13 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
-                sh 'docker-compose build'
+                sh 'docker compose build'
             }
         }
         stage('Run Migrations & Tests') {
             steps {
                 echo 'Applying migrations...'
-                sh 'docker-compose run web python manage.py migrate'
+                sh 'docker compose run web python manage.py migrate'
                 // Optionally run your tests here, e.g.,
                 // sh 'docker-compose run web python manage.py test'
             }
@@ -41,8 +41,8 @@ pipeline {
             steps {
                 echo 'Deploying the application...'
                 // Example: restart Docker Compose stack (or use Kubernetes, etc.)
-                sh 'docker-compose down'
-                sh 'docker-compose up -d'
+                sh 'docker compose down'
+                sh 'docker compose up -d'
             }
         }
     }
