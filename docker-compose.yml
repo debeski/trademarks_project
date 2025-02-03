@@ -1,0 +1,35 @@
+
+services:
+  web:
+    build: .
+    container_name: trademarks_app
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DEBUG=1
+      - DB_NAME=tmdb
+      - DB_USER=admin
+      - DB_PASSWORD=po218
+      - DB_HOST=db
+      - DB_PORT=5432
+
+  db:
+    image: postgres:15
+    container_name: trademarks_db
+    restart: always
+    environment:
+      POSTGRES_DB: tmdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: po218
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
